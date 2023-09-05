@@ -1,0 +1,10 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:lightningQuickActionWithoutHeader,lightning:hasPageReference,lightning:actionOverride,force:hasSObjectName,force:hasRecordId">
+    <aura:attribute name="sObjectName" type="String" />
+
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    <!-- <aura:handler name="change" action="{!c.rerender}" value="{!v.pageReference}"></aura:handler> -->
+
+    <aura:if isTrue="{!v.sObjectName == 'ChattingGroup__c'}" >
+        <c:createNewChattingGroup aura:id="webCmp"/>
+    </aura:if>
+</aura:component>
