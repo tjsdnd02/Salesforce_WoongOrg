@@ -1,18 +1,10 @@
-# Salesforce DX Project: Next Steps
+웅채팅 입니다 ^__^
 
-Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
+웅채팅을 사용하기 위해선 다음과 같은 세일즈포스 오그 내에 설정이 필요합니다.
 
-## How Do You Plan to Deploy Your Changes?
-
-Do you want to deploy a set of changes, or create a self-contained application? Choose a [development model](https://developer.salesforce.com/tools/vscode/en/user-guide/development-models).
-
-## Configure Your Salesforce DX Project
-
-The `sfdx-project.json` file contains useful configuration information for your project. See [Salesforce DX Project Configuration](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_config.htm) in the _Salesforce DX Developer Guide_ for details about this file.
-
-## Read All About It
-
-- [Salesforce Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
-- [Salesforce CLI Setup Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_intro.htm)
-- [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
-- [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference.htm)
+1. SObject 생성 및 Custom Fields 생성
+2. 설정 > 보안 > 공유 설정 > 채팅그룹(ChattingGroup__c) 오브젝트 기본 액세스를 비공개로 설정
+3. 채팅을 사용하는 사용자의 프로필에 채팅그룹(ChattingGroup__c), 채팅(Chat__c) 오브젝트 권한 부여
+   -> 설정 > 사용자 > 프로필 > 사용자의 프로필 > 채틍그룹 및 채팅 오브젝트 읽기, 만들기, 편집, 삭제 활성화
+4. 프로필 Apex class 권한을 부여해준다.
+5. 채팅 컴포넌트를 사용하려는 화면에 추가한다.(Lightning Page의 경우 custom component에서 검색, 드래그 앤 드롭으로 추가한다)
