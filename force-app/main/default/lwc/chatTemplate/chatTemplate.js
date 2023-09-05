@@ -251,6 +251,7 @@ export default class ChatTemplate extends NavigationMixin(LightningElement) {
                 this.selectUsers = [];
                 this.searchUsers = [];
             } else {
+                console.error(message);
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: '초대를 실패했습니다.'
@@ -321,25 +322,40 @@ export default class ChatTemplate extends NavigationMixin(LightningElement) {
     async handleFileSubmit() {
         const reader = new FileReader();
         reader.onload = async () => {
+            console.log('reader load');
             this.isFileSending = true;
             const file = {
                 name: this.fileName
                 , type: this.fileType
                 , data: reader.result
             };
-            const result = await createFileMessage({recordId: this.recordId, file});
-            if(result.state == 'SUCCESS') {
-                const newMessage = JSON.parse(result.newMessage);
-                newMessage.HHmm = `${newMessage.hour}:${newMessage.min}`;
-                newMessage.photoUrl = this.info.photoUrl;
-                newMessage.isMyMessage = newMessage.createdById == this.info.userId;
-                newMessage.name = this.info.userName;
-                newMessage.isImg = true;
-                this.contents.push(newMessage);
-                this.handleClosePreview();
-                setTimeout(() => {
-                    this.bodyScrollBottom();
-                }, 1000);
+
+            try {
+                const result = await createFileMessage({recordId: this.recordId, file});
+                if(result.state == 'SUCCESS') {
+                    const newMessage = JSON.parse(result.newMessage);
+                    newMessage.HHmm = `${newMessage.hour}:${newMessage.min}`;
+                    newMessage.photoUrl = this.info.photoUrl;
+                    newMessage.isMyMessage = newMessage.createdById == this.info.userId;
+                    newMessage.name = this.info.userName;
+                    newMessage.isImg = true;
+                    this.contents.push(newMessage);
+                    this.handleClosePreview();
+                    setTimeout(() => {
+                        this.bodyScrollBottom();
+                    }, 1000);
+                } else {
+                    console.error(result.message);
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: '채팅을 보내지 못했습니다.'
+                            , message: result.message
+                            , variant: "error"
+                        })
+                    );
+                }
+            } catch (error) {
+                console.error(error);
             }
             this.isFileSending = false;
         }
@@ -435,6 +451,7 @@ export default class ChatTemplate extends NavigationMixin(LightningElement) {
             });
             this.memberMap = memberMap;
         } else {
+            console.error(message);
             this.dispatchEvent(
                 new ShowToastEvent({
                     title: '채팅 내용을 불러오지 못했습니다.'
@@ -471,7 +488,14 @@ export default class ChatTemplate extends NavigationMixin(LightningElement) {
                 newMessage.isImg = false;
                 this.contents.push(newMessage);
             } else {
-                
+                console.error(result.message);
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: '채팅을 보내지 못했습니다.'
+                        , message: result.message
+                        , variant: "error"
+                    })
+                );
             }
             this.isSending = false;
             this.clearNewMessage();
@@ -555,10 +579,14 @@ export default class ChatTemplate extends NavigationMixin(LightningElement) {
                         const notiResult = await getRealtimeMessage({recordId, key: Key__c});
                         if(notiResult.state == 'SUCCESS') {
                             this.contents.push(JSON.parse(notiResult.messages));
+                        } else {
+                            console.error(notiResult.message);
                         }
                         setTimeout(() => {
                             this.bodyScrollBottom();
                         }, 700);
+                    } else {
+                        console.error(result.message);
                     }
                 }
             } else if(Type__c == 'MESSAGE') {
@@ -580,6 +608,8 @@ export default class ChatTemplate extends NavigationMixin(LightningElement) {
                         setTimeout(() => {
                             this.bodyScrollBottom();
                         }, 700);
+                    } else {
+                        console.error(result.message);
                     }
                 }
             } else if(Type__c == 'MESSAGE_FILE') {
@@ -601,6 +631,8 @@ export default class ChatTemplate extends NavigationMixin(LightningElement) {
                         setTimeout(() => {
                             this.bodyScrollBottom();
                         }, 700);
+                    } else {
+                        console.error(result.message);
                     }
                 }
             } else if(Type__c == 'IN') {

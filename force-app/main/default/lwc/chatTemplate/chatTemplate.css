@@ -204,6 +204,7 @@
 .content .content-text .text > pre {
     margin: auto;
     font-family: unset;
+    white-space: pre-wrap; 
 }
 .content .content-text .time {
     width: 100%;

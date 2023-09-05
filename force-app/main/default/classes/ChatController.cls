@@ -21,7 +21,7 @@ public with sharing class ChatController {
     public static MessageResult getMessages(String recordId) {
         MessageResult result = new MessageResult();
         try {
-            Chat__c[] chats = [SELECT Id, Content__c FROM Chat__c WHERE Group__c = :recordId ORDER BY CreatedDate DESC LIMIT 3];
+            Chat__c[] chats = [SELECT Id, Content__c FROM Chat__c WHERE Group__c = :recordId ORDER BY CreatedDate LIMIT 3];
             List<MessageModel> messages = new List<MessageModel>();
             Map<String, String> fileMap = new Map<String, String>();
 
@@ -162,7 +162,7 @@ public with sharing class ChatController {
     }
 
     private static Chat__c getChatRecord(String recordId, MessageModel newMessage) {
-        List<Chat__c> chats = [SELECT Id, Content__c FROM Chat__c WHERE Group__c = :recordId ORDER BY CreatedDate DESC LIMIT 1];
+        List<Chat__c> chats = [SELECT Id, Content__c, Group__c FROM Chat__c WHERE Group__c = :recordId ORDER BY CreatedDate DESC LIMIT 1];
         List<MessageModel> messageList;
         Chat__c chat;
 
@@ -178,6 +178,8 @@ public with sharing class ChatController {
         }
 
         messageList.add(newMessage);
+
+        chat.Content__c = JSON.serialize(messageList);
 
         if(chat.Id != null && chat.Content__c?.length() > 131072) {
             List<MessageModel> newMessages = new List<MessageModel>{messageList[messageList.size()-1]};
