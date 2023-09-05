@@ -1,0 +1,11 @@
+.slds-modal__content {
+    min-height: 400px;
+}
+
+.slds-dropdown {
+    margin-top: 0;
+}
+
+.avatar-container > img {
+    border-radius: 100%;
+}

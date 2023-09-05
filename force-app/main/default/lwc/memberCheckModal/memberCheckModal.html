@@ -1,0 +1,43 @@
+<template>
+    <lightning-modal-header label="환영합니다." ></lightning-modal-header>
+    <lightning-modal-body>
+        <div class="modal-layout">
+            <div lwc:if={isLoading}>
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </div>
+            <div lwc:if={isPrivate}>
+                <div class="private-header-message">
+                    <h2>{headerMessage}</h2>
+                </div>
+                <div class="private-input-container">
+                    <div class="slds-form-element password-input">
+                        <label class="slds-form-element__label" for="text-input-id-47">비밀번호 입력</label>
+                        <div class="slds-form-element__control slds-input-has-icon">
+                            <template lwc:if={isPriview} >
+                                <lightning-button-icon icon-name="utility:lock" variant="bare" onclick={handlePasswordHide} alternative-text="숨기기" title="숨기기" class="icon-button-right"></lightning-button-icon>
+                                <input type="text" class="slds-input" value={pw} onkeyup={handlePasswordKeyup} />
+                            </template>
+                            <template lwc:else>
+                                <lightning-button-icon icon-name="utility:preview" variant="bare" onclick={handlePasswordView} alternative-text="보기" title="보기" class="icon-button-right"></lightning-button-icon>
+                                <input type="password" class="slds-input" value={pw} onkeyup={handlePasswordKeyup} />
+                            </template>
+                        </div>
+                    </div>
+                </div>
+                <div class="private-alert-message">
+                    <span class="alert-message"></span>
+                </div>
+            </div>
+            <div lwc:else>
+                <div class="header-message">
+                    <h2>{checkPasswordResultMessage}</h2>
+                    <h2>{headerMessage}</h2>
+                </div>
+                <lightning-progress-bar value={progressValue} size="large" variant="circular"></lightning-progress-bar>
+            </div>
+        </div>
+    </lightning-modal-body>
+    <lightning-modal-footer>
+
+    </lightning-modal-footer>
+</template>

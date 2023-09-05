@@ -1,0 +1,306 @@
+.layout-body {
+    height: 600px;
+    width: 100%
+}
+
+.layout-body .chat-container {
+    width: 440px;
+    height: 100%;
+    margin: auto;
+}
+
+/* [S] chatting area */
+.chat-container {
+    min-height: 320px;
+    min-width: 200px;
+    border: 1.5px solid;
+    border-radius: 12px;
+}
+
+.chat-header {
+    margin: 20px 0;
+    height: 100px;
+}
+.chat-header > div {
+    margin: 12px 0;
+}
+.chat-info-container {
+    text-align: center;
+}
+.chat-info-container > h2 {
+    font-size: 1rem;
+    font-weight: bold;
+}
+.user-info-container {
+    position: relative;
+}
+.user-profile {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.user-profile-photo {
+    height: 45px;
+    width: 45px;
+    border: 1px solid;
+    border-radius: 23px;
+    -webkit-user-drag: none;
+}
+.chatting-out-button {
+    position: absolute;
+    bottom: 4px;
+    left: 12px;
+    cursor: pointer;
+}
+.member-info {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.member-info > div:last-child {
+    place-self: flex-end;
+    padding: 10px 10px 0 0;
+}
+
+.chat-body {
+    height: 358px;
+    position: relative;
+}
+.member-list-container {
+    position: absolute;
+    right: 0;
+    min-width: 200px;
+    width: 50%;
+    height: 100%;
+    background-color: #ffffff;
+    z-index: -1;
+    border: 1px solid;
+    border-right: 0;
+    overflow: hidden;
+    transition: 0.3s;
+    transform: translateX(50%);
+    opacity: 0;
+}
+.member-list-container.is-open {
+    z-index: 1;
+    transform: translateX(0px);
+    opacity: 1;
+}
+.member-list-container .list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    height: 48px;
+}
+.member-list-container .list-header .add-button {
+    padding: 4px;
+    cursor: pointer;
+}
+.member-list-container .list-body {
+    overflow: auto;
+    height: 310px;
+}
+.member-list-container .list-body > div:nth-child(odd) {
+    background-color: #f0f6ff;
+}
+.member-list-container .list-body > div:nth-child(even) {
+    background-color: #f8fbff;
+}
+.member-list-container .list-body > div:hover {
+    background-color: #ddeafc;
+}
+.member-list-container .list-item-container {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    justify-content: space-between;
+}
+.member-list-container .search-uesr-item {
+    cursor: pointer;
+}
+.list-item-container .name {
+    padding: 0 8px;
+}
+.list-item-container .button-container {
+    position: relative;
+}
+.list-item-container .button-container > ul {
+    position: absolute;
+    display: inline-block;
+    right: 0;
+    width: 100px;
+    background-color: #eee;
+}
+.list-item-container .button-container > ul.hide {
+    display: none;
+}
+.list-item-container .button-container > ul li {
+    border: 1px solid;
+    padding: 7px;
+    cursor: pointer;
+}
+.list-item-container .button-container > ul li:nth-child(even) {
+    border-top: none;
+}
+.member-list-container .list-footer {
+    height: 68px;
+    overflow: auto;
+}
+.content-container {
+    background-color: #e5eefb;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    padding: 20px;
+    height: 100%;
+    overflow: auto;
+}
+.content {
+    display: flex;
+    margin: 16px 0;
+    clear: both;
+}
+.content.fRight {
+    float: right;
+    margin-top: 0;
+}
+.content:first-child {
+    margin-top: 0;
+}
+.content:last-child {
+    margin-bottom: 0;
+}
+.content > .alert-content {
+    margin: auto;
+}
+.content .member-photo {
+    height: 28px;
+    width: 28px;
+    padding-top: 12px;
+    user-select: none;
+}
+.content .member-photo > img {
+    /* border: 1px solid; */
+    border-radius: 14px;
+    -webkit-user-drag: none;
+}
+.content .content-text {
+    margin-left: 8px;
+}
+.content .content-text .name {
+    font-size: 10px;
+    font-weight: bold;
+    color: #888888;
+}
+.content .content-text .text {
+    max-width: 240px;
+    background-color: #ffffff;
+    padding: 8px;
+    border-radius: 8px;
+}
+.content .content-text .time {
+    width: 100%;
+    height: 20px;
+}
+
+.image-modal-container {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+.image-modal {
+    position: absolute;
+    min-height: 200px;
+    min-width: 200px;
+    max-height: 300px;
+    max-width: 350px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    background-color: #ffffff;
+}
+.image-modal > .modal-header {
+    height: 40px;
+    padding: 8px;
+    padding-bottom: 0;
+}
+.image-modal > .modal-header > .file-name{
+    text-align: center;
+}
+.image-modal > .modal-body {
+    height: 120px;
+    padding: 0 8px;
+}
+.file-preview {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    border: 1px solid #a9a9a9;
+}
+.file-preview > img {
+    margin: auto;
+    max-height: 100%;
+}
+.image-modal > .modal-footer {
+    height: 40px;
+    padding: 8px;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 0;
+}
+.image-modal > .modal-footer button:first-child {
+    margin-left: 12px;
+}
+.image-modal > .modal-footer button:last-child {
+    margin-right: 12px;
+}
+.image-modal-background {
+    position: absolute;
+    background: #afafaf7a;
+    z-index: 1;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+
+.chat-footer {
+    height: 100px;
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+}
+.chat-footer > .input-container, .chat-footer .select-user-container {
+    border-right: 1px solid;
+}
+.chat-footer > .input-container > textarea {
+    resize: none;
+    height: 100%;
+    width: 100%;
+    border: 0;
+    border-radius: 12px;
+    padding: 12px;
+}
+.chat-footer > .input-container > textarea:focus {
+    outline: 0;
+}
+.chat-footer > .submit-button {
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    line-height: 100px;
+    cursor: pointer;
+    user-select: none;
+}
+.chat-footer > .submit-button:active {
+    background-color: #f4fff7;
+    box-shadow: inset 1px 1px 1px 0px;
+}
+.chat-footer .select-user-container {
+    overflow: auto;
+}
+
+/* [E] */
