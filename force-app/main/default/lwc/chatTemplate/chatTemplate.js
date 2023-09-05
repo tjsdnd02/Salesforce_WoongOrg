@@ -268,8 +268,9 @@ export default class ChatTemplate extends NavigationMixin(LightningElement) {
         e.preventDefault();
         const value = e.currentTarget.value;
         if(!value) return;
-        if(e.key == 'Enter') {
-            const message = value.replaceAll('\n', '');
+        if(e.key == 'Enter' && !e.shiftKey) {
+            // const message = value.replaceAll('\n', '');
+            const message = value;
             e.currentTarget.value = message;
             if(!message) return;
             this.createNewMessage(message);
@@ -318,26 +319,15 @@ export default class ChatTemplate extends NavigationMixin(LightningElement) {
     }
 
     async handleFileSubmit() {
-        console.log('fileBlob: ', this.fileBlob);
-        const imgElement = document.createElement('img');
-        imgElement.src = this.fileUrl;
-
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-
-        ctx.drawImage(imgElement, 0, 0);
-
-        const base64 = canvas.toDataURL();
-        const file = {
-            name: this.fileName
-            , type: this.fileType
-            , data: base64
-        };
-        
-        this.isFileSending = true;
-        try {
+        const reader = new FileReader();
+        reader.onload = async () => {
+            this.isFileSending = true;
+            const file = {
+                name: this.fileName
+                , type: this.fileType
+                , data: reader.result
+            };
             const result = await createFileMessage({recordId: this.recordId, file});
-            console.log('result: ', result);
             if(result.state == 'SUCCESS') {
                 const newMessage = JSON.parse(result.newMessage);
                 newMessage.HHmm = `${newMessage.hour}:${newMessage.min}`;
@@ -351,10 +341,46 @@ export default class ChatTemplate extends NavigationMixin(LightningElement) {
                     this.bodyScrollBottom();
                 }, 1000);
             }
-        } catch (error) {
-            console.error(error);
+            this.isFileSending = false;
         }
-        this.isFileSending = false;
+        reader.readAsDataURL(this.fileBlob);
+
+        // const imgElement = document.createElement('img');
+        // imgElement.src = this.fileUrl;
+
+        // const canvas = document.createElement('canvas');
+        // const ctx = canvas.getContext('2d');
+
+        // ctx.drawImage(imgElement, 0, 0);
+
+        // const base64 = canvas.toDataURL();
+        // const file = {
+        //     name: this.fileName
+        //     , type: this.fileType
+        //     , data: base64
+        // };
+        
+        // this.isFileSending = true;
+        // try {
+        //     const result = await createFileMessage({recordId: this.recordId, file});
+        //     console.log('result: ', result);
+        //     if(result.state == 'SUCCESS') {
+        //         const newMessage = JSON.parse(result.newMessage);
+        //         newMessage.HHmm = `${newMessage.hour}:${newMessage.min}`;
+        //         newMessage.photoUrl = this.info.photoUrl;
+        //         newMessage.isMyMessage = newMessage.createdById == this.info.userId;
+        //         newMessage.name = this.info.userName;
+        //         newMessage.isImg = true;
+        //         this.contents.push(newMessage);
+        //         this.handleClosePreview();
+        //         setTimeout(() => {
+        //             this.bodyScrollBottom();
+        //         }, 1000);
+        //     }
+        // } catch (error) {
+        //     console.error(error);
+        // }
+        // this.isFileSending = false;
     }
 
     handleClosePreview() {
