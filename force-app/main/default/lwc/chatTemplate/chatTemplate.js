@@ -74,6 +74,20 @@ export default class ChatTemplate extends NavigationMixin(LightningElement) {
         }
     }
 
+    // [S] 채팅을 보고 있는 중인지 확인하기 위한 포커스 Flag
+    @track isFocusOn = false;
+
+    handleChatFocus() {
+        console.log('handle chat focus!!');
+        this.isFocusOn = true;
+    }
+
+    handleChatBlur() {
+        console.log('handle chat blur!!');
+        this.isFocusOn = false;
+    }
+    // [E]
+
     async handleExitClick() {
         const confirmMessage = this.isMyRoom
                              ? `${this.info.userName} 님은 채팅방 소유자 입니다.\n확인을 누르면 채팅방과 채팅 내역이 삭제됩니다.`
@@ -540,8 +554,12 @@ export default class ChatTemplate extends NavigationMixin(LightningElement) {
         if(Notification.permission === "denied" || Notification.permission === "default") {
             console.warn('브라우저 알림이 차단되어있습니다. 알림 권한을 허용해주세요.');
         } else {
-            const noti = new Notification('웅채팅 새로운 메세지', {body: message, icon: woongChatIcon});
-            setTimeout(() => {Notification.close.bind(noti)}, 3000);
+            if(!this.isFocusOn) {
+                const noti = new Notification('웅채팅 새로운 메세지', {body: message, icon: woongChatIcon});
+                setTimeout(() => {Notification.close.bind(noti)}, 3000);
+            } else {
+                console.log('채팅을 사용중입니다. 알림을 보내지 않습니다.');
+            }
         }
     }
 

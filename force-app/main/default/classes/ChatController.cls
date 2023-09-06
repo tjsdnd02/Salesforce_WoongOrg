@@ -23,7 +23,6 @@ public with sharing class ChatController {
         try {
             Chat__c[] chats = [SELECT Id, Content__c FROM Chat__c WHERE Group__c = :recordId ORDER BY CreatedDate LIMIT 3];
             List<MessageModel> messages = new List<MessageModel>();
-            Map<String, String> fileMap = new Map<String, String>();
 
             for(Chat__c c : chats) {
                 List<MessageModel> messageList = c.Content__c == null 

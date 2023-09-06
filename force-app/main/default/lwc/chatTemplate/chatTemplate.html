@@ -4,7 +4,7 @@
             
         </div>
         <div class="layout-body">
-            <div class="chat-container">
+            <div class="chat-container" tabindex="0" onfocus={handleChatFocus} onblur={handleChatBlur}>
                 <div class="chat-header">
                     <div class="chat-info-container">
                         <h2>{info.name}</h2>
@@ -153,7 +153,13 @@
                     </template>
                     <template lwc:else >
                         <div class="input-container">
-                            <textarea placeholder="메세지를 입력해주세요..." class="message-input" onkeyup={handleKeyup} onpaste={handlePaste}></textarea>
+                            <textarea placeholder="메세지를 입력해주세요..."
+                                      class="message-input"
+                                      onfocus={handleChatFocus}
+                                      onblur={handleChatBlur}
+                                      onkeyup={handleKeyup}
+                                      onpaste={handlePaste}>
+                            </textarea>
                         </div>
                         <div class="submit-button" onclick={handleClick}>보내기</div>
                     </template>
